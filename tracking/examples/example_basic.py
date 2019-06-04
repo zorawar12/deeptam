@@ -97,6 +97,9 @@ def main():
     simple_visualization(frame_key['image'], frame_2['image'], results_2['warped_image'], 2)
 
     del tracker_core
+
+    pickle.dump(sequence, open('sequence.pkl', 'wb'))
+
     
 if __name__ == "__main__":
     main()

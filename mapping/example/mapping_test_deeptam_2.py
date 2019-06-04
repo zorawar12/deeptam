@@ -47,7 +47,7 @@ def main():
     mapping_module_path = os.path.join(examples_dir,'..','python/deeptam_mapper/models/networks.py')
     checkpoints = [os.path.join(examples_dir, '..', 'weights', 'deeptam_mapper_weights','snapshot-800000'),
                     ]
-    datafile = os.path.join(examples_dir,'..','data/sun3d_example_seq.pkl')
+    datafile = '/home/msamogh/deeptam/deeptam/tracking/examples/output.pkl' #os.path.join(examples_dir,'..','data/sun3d_example_seq.pkl')
 
     # load the example sequence
     with open(datafile,'rb') as f:
