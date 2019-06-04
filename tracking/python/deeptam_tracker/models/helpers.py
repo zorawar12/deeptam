@@ -21,8 +21,8 @@ def convert_NHWC_to_NCHW(inp):
 
 def myLeakyRelu(x):
     """Leaky ReLU with leak factor 0.1"""
-    # return tf.maximum(0.1*x,x)
-    return sops.leaky_relu(x, leak=0.1)
+    return tf.maximum(0.1*x,x)
+    #return sops.leaky_relu(x, leak=0.1)
     #return tf.nn.leaky_relu(x, alpha=0.1)
 
 
