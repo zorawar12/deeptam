@@ -37,7 +37,7 @@ def visualization(image, depth):
     ax2.set_title('Depth Prediction')
     ax2.imshow(np.array(depth))
     
-    plt.show()
+    #plt.show()
 
 
 def main():
@@ -81,6 +81,9 @@ def main():
     visualization(mapper._keyframe.image, depth_pr)
     
     del mapper
+    return depth_pr
+    
 if __name__ == '__main__':
 
-    main()
+    depth_pr = main()
+    inverse_depth_pr = 1./depth_pr

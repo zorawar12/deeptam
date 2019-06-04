@@ -207,11 +207,16 @@ def mapping_with_pose(
     # read input data
     with open(datafile,'rb') as f:
         sub_seq_py = pickle.load(f)
-
+    print ("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    print (sub_seq_py)
+    print ("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     axes = init_visualization('DeepTAM_Mapper')
     ######### depth_gt
     depth_gt = sub_seq_py.get_depth(frame=0)
-
+    print ("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    print ("Ground Truth Depth")
+    print (depth_gt)
+    print ("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
     ######### fixed band prediction with increasing number of frames
     depth_init = np.ones([1,1,240,320])
@@ -231,6 +236,10 @@ def mapping_with_pose(
         fb_out = session.run(fb_depth_outputs, feed_dict=feed_dict)
 
         depth_pr = fb_out['predict_depth']
+        print ("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        print ("Predicted Depth")
+        print (depth_pr)
+        print ("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
             
         dm = compute_depth_metrics(1/depth_gt, 1/depth_pr)
         update_visualization(axes, 
@@ -251,6 +260,9 @@ def mapping_with_pose(
         }
         nb_out = session.run(nb_depth_outputs, feed_dict=feed_dict)
         depth_pr = nb_out['predict_depth']
+        print ("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        print (depth_pr)
+        print ("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
         feed_dict = {
             nb_refine_depth_net.placeholders['image_key']: sub_seq_py.get_image(frame=0),
@@ -268,9 +280,10 @@ def mapping_with_pose(
                              nb_refine_out['predict_depth'],
                              ['',str(frame_id),str(frame_id),str(iteration)])    
             
-    plt.show()
+    plt.show()    
     del session
     tf.reset_default_graph()
+    return [depth_gt, depth_pr]
 
 
 
@@ -289,7 +302,10 @@ def main():
     height = 240
 
     datafile = os.path.join(examples_dir,'..','data/sun3d_example_seq.pkl')
-    mapping_with_pose(
+    print ("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    print (datafile)
+    print ("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    a = mapping_with_pose(
                     datafile,
                     mapping_module_path,
                     checkpoints,
@@ -298,8 +314,9 @@ def main():
                     width=width,
                     height=height,
                     )
+    return a
     
     
 if __name__ == '__main__':
 
-    main()
+    b = main()
